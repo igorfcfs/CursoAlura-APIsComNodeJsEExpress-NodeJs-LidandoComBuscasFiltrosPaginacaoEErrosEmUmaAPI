@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import ErroBase from "../erros/erroBase.js";
 import RequisicaoIncorreta from "../erros/requisicaoIncorreta.js";
 import ErroValidacao from "../erros/erroValidacao.js";
-import NaoEncontrado from "../erros/naoEncontrado.js";
 
 //middlewares: funcoes especias passadas como parametro para o app.use() que interceptam uma requisicao que e feita para nossa API
 
@@ -15,7 +14,7 @@ function manipuladorDeErros(erro, req, res, next) {
   } else if (erro instanceof mongoose.Error.ValidationError){
     // console.log(erro.errors);
     new ErroValidacao(erro).enviarResposta(res);
-  } else if(erro instanceof NaoEncontrado) {
+  } else if(erro instanceof ErroBase) {
     erro.enviarResposta(res);
   } else {
     new ErroBase().enviarResposta(res);
